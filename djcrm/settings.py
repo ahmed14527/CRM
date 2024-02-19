@@ -39,11 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'leads',
-    'theme',
-    'agents',
     'crispy_forms',
     "crispy_tailwind",
     'tailwind',
+    'rest_framework',
+        'drf_yasg',
+
 ]
 
 MIDDLEWARE = [

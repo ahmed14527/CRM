@@ -26,22 +26,31 @@ from django.contrib.auth.views import (
     PasswordResetCompleteView
 )
 from django.urls import path, include
-from leads.views import landing_page, LandingPageView, SignupView, DashboardView
+from django.contrib import admin
+from django.urls import path,include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import path, re_path, include
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Ready-app",
+        default_version="v1",
+        description="API for Ready-app",
+        terms_of_service="https://your-terms-of-service-url.com/",
+        contact=openapi.Contact(email="ahmed890magdy@gmail.com"),
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', LandingPageView.as_view(), name='landing-page'),
-    path('dashboard/', DashboardView.as_view(), name='dashboard'),
-    path('leads/',  include('leads.urls', namespace="leads")),
-    path('agents/',  include('agents.urls', namespace="agents")),
-    path('signup/', SignupView.as_view(), name='signup'),
-    path('reset-password/', PasswordResetView.as_view(), name='reset-password'),
-    path('password-reset-done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('password-reset-complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('',  include('leads.urls')),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
 if settings.DEBUG:

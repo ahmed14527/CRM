@@ -1,29 +1,17 @@
-
 from django.urls import path
-from .views import (
-    LeadListView, LeadDetailView, LeadCreateView, LeadUpdateView, LeadDeleteView,
-    AssignAgentView, CategoryListView, CategoryDetailView, LeadCategoryUpdateView,
-    CategoryCreateView, CategoryUpdateView, CategoryDeleteView, LeadJsonView, 
-    FollowUpCreateView, FollowUpUpdateView, FollowUpDeleteView
-)
-
-app_name = "leads"
+from . import views
 
 urlpatterns = [
-    path('', LeadListView.as_view(), name='lead-list'),
-    path('json/', LeadJsonView.as_view(), name='lead-list-json'),
-    path('<int:pk>/', LeadDetailView.as_view(), name='lead-detail'),
-    path('<int:pk>/update/', LeadUpdateView.as_view(), name='lead-update'),
-    path('<int:pk>/delete/', LeadDeleteView.as_view(), name='lead-delete'),
-    path('<int:pk>/assign-agent/', AssignAgentView.as_view(), name='assign-agent'),
-    path('<int:pk>/category/', LeadCategoryUpdateView.as_view(), name='lead-category-update'),
-    path('<int:pk>/followups/create/', FollowUpCreateView.as_view(), name='lead-followup-create'),
-    path('followups/<int:pk>/', FollowUpUpdateView.as_view(), name='lead-followup-update'),
-    path('followups/<int:pk>/delete/', FollowUpDeleteView.as_view(), name='lead-followup-delete'),
-    path('create/', LeadCreateView.as_view(), name='lead-create'),
-    path('categories/', CategoryListView.as_view(), name='category-list'),
-    path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-detail'),
-    path('categories/<int:pk>/update/', CategoryUpdateView.as_view(), name='category-update'),
-    path('categories/<int:pk>/delete/', CategoryDeleteView.as_view(), name='category-delete'),
-    path('create-category/', CategoryCreateView.as_view(), name='category-create'),
+    path('users/', views.UserListCreateView.as_view(), name='user-list'),
+    path('users/<int:pk>/', views.UserRetrieveUpdateDestroyView.as_view(), name='user-detail'),
+    path('profiles/', views.UserProfileListCreateView.as_view(), name='userprofile-list'),
+    path('profiles/<int:pk>/', views.UserProfileRetrieveUpdateDestroyView.as_view(), name='userprofile-detail'),
+    path('leads/', views.LeadListCreateView.as_view(), name='lead-list'),
+    path('leads/<int:pk>/', views.LeadRetrieveUpdateDestroyView.as_view(), name='lead-detail'),
+    path('followups/', views.FollowUpListCreateView.as_view(), name='followup-list'),
+    path('followups/<int:pk>/', views.FollowUpRetrieveUpdateDestroyView.as_view(), name='followup-detail'),
+    path('agents/', views.AgentListCreateView.as_view(), name='agent-list'),
+    path('agents/<int:pk>/', views.AgentRetrieveUpdateDestroyView.as_view(), name='agent-detail'),
+    path('categories/', views.CategoryListCreateView.as_view(), name='category-list'),
+    path('categories/<int:pk>/', views.CategoryRetrieveUpdateDestroyView.as_view(), name='category-detail'),
 ]
